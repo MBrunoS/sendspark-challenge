@@ -1,9 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Exclude } from 'class-transformer';
+import { Document } from 'mongoose';
+import { v4 as uuid } from 'uuid';
 
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
+  @Prop({ default: uuid() })
+  @Exclude()
+  _id: string;
+
   @Prop({ required: true, maxlength: 120 })
   firstName: string;
 
@@ -18,6 +25,7 @@ export class User {
   email: string;
 
   @Prop({ required: true })
+  @Exclude()
   password: string;
 
   @Prop({ required: true, maxlength: 120 })

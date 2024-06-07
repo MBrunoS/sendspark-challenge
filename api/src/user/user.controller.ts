@@ -1,16 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import MongooseClassSerializerInterceptor from './interceptor/mongoose-serializer.interceptor';
+import { User } from './user.schema';
 
+@UseInterceptors(MongooseClassSerializerInterceptor(User))
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  @Post('signup')
-  async signup(@Body() createUserDto: CreateUserDto) {
-    const user = await this.userService.create(createUserDto);
-    return { message: 'User created successfully', user };
-  }
 
   @Get()
   findAll() {
