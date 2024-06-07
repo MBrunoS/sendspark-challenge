@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { ClassTransformOptions, plainToClass } from 'class-transformer';
 import { Document } from 'mongoose';
+import { PaginatedResponse } from 'src/utils/types/PaginatedResponse';
 
 function MongooseClassSerializerInterceptor(
   classToIntercept: Type,
@@ -19,8 +20,18 @@ function MongooseClassSerializerInterceptor(
     }
 
     private prepareResponse(
-      response: PlainLiteralObject | PlainLiteralObject[],
+      response:
+        | PlainLiteralObject
+        | PlainLiteralObject[]
+        | PaginatedResponse<PlainLiteralObject>,
     ) {
+      if ('data' in response) {
+        return {
+          ...response,
+          data: response.data.map(this.changePlainObjectToClass),
+        };
+      }
+
       if (Array.isArray(response)) {
         return response.map(this.changePlainObjectToClass);
       }
