@@ -4,6 +4,7 @@ import { User, UserDocument } from './user.schema';
 import { Model } from 'mongoose';
 import { SignUpDto } from '../auth/dto/sign-up.dto';
 import * as bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class UserService {
@@ -19,6 +20,7 @@ export class UserService {
     const hash = await bcrypt.hash(signUpDto.password, salt);
     const createdUser = new this.userModel({
       ...signUpDto,
+      _id: uuid(),
       password: hash,
     });
 
@@ -29,7 +31,17 @@ export class UserService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async getAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+  async getAll(
+    query: { jobTitle?: string; companyName?: string } = {},
+  ): Promise<User[]> {
+    return this.userModel.find(query).exec();
+  }
+
+  async remove(email: string): Promise<void> {
+    const user = await this.userModel.findOne({ email }).exec();
+    if (!user) {
+      throw new BadRequestException('user not found');
+    }
+    this.userModel.deleteOne({ _id: user._id }).exec();
   }
 }

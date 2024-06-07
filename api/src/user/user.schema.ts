@@ -1,13 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
 import { Document } from 'mongoose';
-import { v4 as uuid } from 'uuid';
 
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-  @Prop({ default: uuid() })
+  @Prop()
   @Exclude()
   _id: string;
 
