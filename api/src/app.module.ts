@@ -7,16 +7,15 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(
-      `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}`,
-      {
-        dbName: process.env.DB_NAME,
-      },
-    ),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     AuthModule,
     UserModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    console.log(process.env.MONGO_URI);
+  }
+}
