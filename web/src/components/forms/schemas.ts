@@ -15,7 +15,11 @@ export const signupSchema = Yup.object({
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters long")
-    .max(120, "It must be at most 120 characters long"),
+    .max(120, "It must be at most 120 characters long")
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/,
+      "It must have at least one uppercase letter and one number"
+    ),
   companyName: Yup.string()
     .required("Company name is required")
     .min(2, "It must be at least 2 characters long")
@@ -33,4 +37,8 @@ export const loginSchema = Yup.object({
     .required("Password is required")
     .min(8, "Password must be at least 8 characters long")
     .max(120, "It must be at most 120 characters long")
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/,
+      "It must have at least one uppercase letter and one number"
+    )
 });
