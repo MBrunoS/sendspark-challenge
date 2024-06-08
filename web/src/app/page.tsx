@@ -2,9 +2,21 @@
 import { logout } from "@/actions/auth";
 import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { parseCookies } from "nookies";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [user, setUser] = useState<{ name: string; email: string } | null>(
+    null
+  );
   const router = useRouter();
+
+  useEffect(() => {
+    const cookies = parseCookies();
+    if (cookies.user) {
+      setUser(JSON.parse(cookies.user));
+    }
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -19,7 +31,7 @@ export default function Home() {
       py={10}
     >
       <Typography variant="h3" component="h1">
-        Welcome!
+        {user ? `Welcome, ${user.name}` : "Welcome!"}
       </Typography>
 
       <Button variant="contained" color="purple" onClick={handleLogout}>

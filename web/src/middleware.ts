@@ -7,7 +7,7 @@ export async function middleware(req: NextRequest) {
     let response: NextResponse;
 
     try {
-      await jwtVerify(
+      const { payload } = await jwtVerify(
         token!,
         new TextEncoder().encode(process.env.JWT_SECRET!)
       );
@@ -21,6 +21,14 @@ export async function middleware(req: NextRequest) {
         response = NextResponse.next();
       }
 
+      response.cookies.set(
+        "user",
+        JSON.stringify({ name: payload.name, email: payload.email }),
+        {
+          maxAge: 60 * 60
+        }
+      );
+
       return response;
     } catch (err) {
       console.error("[MIDDLEWARE]", err);
@@ -32,6 +40,7 @@ export async function middleware(req: NextRequest) {
         response = NextResponse.next();
       }
 
+      response.cookies.delete("user");
       response.cookies.delete("token");
 
       return response;
