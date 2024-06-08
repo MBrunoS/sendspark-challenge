@@ -1,5 +1,6 @@
 import { SignUpForm } from "@/components/forms/signup-form";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Link } from "@mui/material";
+import RouterLink from "next/link";
 
 export default function Home() {
   return (
@@ -18,6 +19,13 @@ export default function Home() {
       </Typography>
 
       <SignUpForm />
+
+      <Typography>
+        Already have an account?
+        <Link href="/login" component={RouterLink} ml={1}>
+          Login
+        </Link>
+      </Typography>
     </Box>
   );
 }

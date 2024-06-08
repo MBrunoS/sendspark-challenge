@@ -1,7 +1,15 @@
-import { SignUpForm } from "@/components/forms/signup-form";
-import { Box, Typography } from "@mui/material";
+"use client";
+import { logout } from "@/actions/auth";
+import { Box, Button, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
   return (
     <Box
       display="flex"
@@ -13,6 +21,10 @@ export default function Home() {
       <Typography variant="h3" component="h1">
         Welcome!
       </Typography>
+
+      <Button variant="contained" color="purple" onClick={handleLogout}>
+        Logout
+      </Button>
     </Box>
   );
 }
