@@ -11,10 +11,13 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signup(signUpDto: SignUpDto): Promise<{ access_token: string }> {
+  async signup(signUpDto: SignUpDto) {
     const user = await this.userService.create(signUpDto);
 
-    const payload = { sub: user._id, email: user.email };
+    const payload = {
+      name: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+    };
 
     return {
       access_token: await this.jwtService.signAsync(payload, {
@@ -23,7 +26,7 @@ export class AuthService {
     };
   }
 
-  async signIn(email: string, pass: string): Promise<{ access_token: string }> {
+  async signIn(email: string, pass: string) {
     const user = await this.userService.findByEmail(email);
 
     if (!user) {
@@ -34,7 +37,10 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user._id, email: user.email };
+    const payload = {
+      name: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+    };
 
     return {
       access_token: await this.jwtService.signAsync(payload, {
