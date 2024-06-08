@@ -14,8 +14,4 @@ import { AuthModule } from './auth/auth.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {
-  constructor() {
-    console.log(process.env.MONGO_URI);
-  }
-}
+export class AppModule {}
