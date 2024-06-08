@@ -11,8 +11,13 @@ export default function Home() {
       py={10}
     >
       <Typography variant="h3" component="h1">
-        Welcome!
+        Nice to meet you!
       </Typography>
+      <Typography variant="body1" color="text.secondary" fontWeight="bold">
+        We're excited to have you aboard!
+      </Typography>
+
+      <SignUpForm />
     </Box>
   );
 }

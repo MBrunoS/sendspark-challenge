@@ -9,40 +9,31 @@ import {
   Alert
 } from "@mui/material";
 import { Formik, Form, Field } from "formik";
-import { signupSchema } from "./schemas";
+import { loginSchema } from "./schemas";
 import * as Yup from "yup";
-import { signup } from "@/actions/auth";
+import { login } from "@/actions/auth";
 import { useRouter } from "next/navigation";
 
-type FormValues = Yup.InferType<typeof signupSchema>;
+type FormValues = Yup.InferType<typeof loginSchema>;
 
 const initialValues: FormValues = {
-  firstName: "",
-  companyName: "",
-  lastName: "",
   email: "",
-  password: "",
-  jobTitle: ""
+  password: ""
 };
 
-export const SignUpForm = () => {
+export const LoginForm = () => {
   const [alert, setAlert] = React.useState({
     type: "",
     value: "",
     open: false
   });
+
   const router = useRouter();
 
   const handleSubmit = async (values: FormValues) => {
-    const response = await signup(values);
+    const response = await login(values);
 
     if (response.ok) {
-      setAlert({
-        type: "success",
-        value: "Account created successfully",
-        open: true
-      });
-
       router.push("/");
     } else {
       setAlert({
@@ -81,70 +72,16 @@ export const SignUpForm = () => {
       <Box mt={5}>
         <Formik
           initialValues={initialValues}
-          validationSchema={signupSchema}
+          validationSchema={loginSchema}
           onSubmit={handleSubmit}
         >
           {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
-              <Box mb={2} display="flex" gap={2}>
-                <Field
-                  as={TextField}
-                  name="firstName"
-                  label="First name"
-                  fullWidth
-                  variant="outlined"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  helperText={touched.firstName && errors.firstName}
-                  error={touched.firstName && Boolean(errors.firstName)}
-                />
-
-                <Field
-                  as={TextField}
-                  name="lastName"
-                  label="Last name"
-                  fullWidth
-                  variant="outlined"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  helperText={touched.lastName && errors.lastName}
-                  error={touched.lastName && Boolean(errors.lastName)}
-                />
-              </Box>
-
-              <Box mb={2}>
-                <Field
-                  as={TextField}
-                  name="companyName"
-                  label="Company name"
-                  fullWidth
-                  variant="outlined"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  helperText={touched.companyName && errors.companyName}
-                  error={touched.companyName && Boolean(errors.companyName)}
-                />
-              </Box>
-
-              <Box mb={2}>
-                <Field
-                  as={TextField}
-                  name="jobTitle"
-                  label="Job Title"
-                  fullWidth
-                  variant="outlined"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  helperText={touched.jobTitle && errors.jobTitle}
-                  error={touched.jobTitle && Boolean(errors.jobTitle)}
-                />
-              </Box>
-
               <Box mb={2}>
                 <Field
                   as={TextField}
                   name="email"
-                  label="Work Email"
+                  label="Email"
                   fullWidth
                   variant="outlined"
                   onChange={handleChange}
