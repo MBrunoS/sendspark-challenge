@@ -12,12 +12,6 @@ const theme = createTheme({
   palette: {
     background: {
       default: "#fefaf5"
-    },
-    purple: {
-      main: "#6140ff",
-      light: "#f6f5ff",
-      dark: "#3f2f99",
-      contrastText: "#ffffff"
     }
   },
   typography: {

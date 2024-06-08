@@ -21,7 +21,7 @@ export default function Home() {
       <LoginForm />
 
       <Typography>
-        Don't have an account?
+        Don&apos;t have an account?
         <Link href="/signup" component={RouterLink} ml={1}>
           Sign up
         </Link>

@@ -62,7 +62,7 @@ export const LoginForm = () => {
       >
         <Alert
           onClose={handleCloseAlert}
-          severity={alert.type}
+          severity={alert.type as any}
           variant="filled"
           sx={{ width: "100%", textTransform: "capitalize" }}
         >
@@ -112,7 +112,7 @@ export const LoginForm = () => {
                   type="submit"
                   variant="contained"
                   fullWidth
-                  color="purple"
+                  color="primary"
                 >
                   Continue
                 </Button>

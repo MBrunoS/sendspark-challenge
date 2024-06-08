@@ -15,7 +15,7 @@ export default function Home() {
         Nice to meet you!
       </Typography>
       <Typography variant="body1" color="text.secondary" fontWeight="bold">
-        We're excited to have you aboard!
+        We&apos;re excited to have you aboard!
       </Typography>
 
       <SignUpForm />

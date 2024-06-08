@@ -34,7 +34,7 @@ export default function Home() {
         {user ? `Welcome, ${user.name}` : "Welcome!"}
       </Typography>
 
-      <Button variant="contained" color="purple" onClick={handleLogout}>
+      <Button variant="contained" color="primary" onClick={handleLogout}>
         Logout
       </Button>
     </Box>
